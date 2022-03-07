@@ -1,5 +1,6 @@
 import time
 import collections
+from ..exceptions import IoCareError
 
 class Purifier(object):
     def __init__(self, data, api):
@@ -50,7 +51,7 @@ class Purifier(object):
         except KeyError as e:
             return e
         except AttributeError:
-            return f'Unable to get info for {self.name}. Make sure purifier is connected to WiFi."
+            raise IoCareError(f'Unable to get info for {self.name}. Make sure purifier is connected to WiFi.')
 
     def set_power(self, on):
         self.is_on = on
