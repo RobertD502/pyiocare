@@ -49,6 +49,8 @@ class Purifier(object):
                 self.quality['air_quality_index'] = q['inairquality']
         except KeyError as e:
             return e
+        except AttributeError:
+            return f'Unable to get info for {self.name}. Make sure purifier is connected to WiFi."
 
     def set_power(self, on):
         self.is_on = on
