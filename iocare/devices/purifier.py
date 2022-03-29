@@ -16,6 +16,11 @@ class Purifier(object):
     def refresh(self):
         try:
             control_status = self.api.control_status(self)
+            mcu_version = self.api.mcu_version(self)
+            if mcu_version['curMcuVer'] is not None:
+                self.new_model = True
+            else:
+                self.new_model = False            
             self.device_connected_to_servers = self.api.network_status(self)
             self.is_on = control_status['0001'] == '1'
             self.is_auto = control_status['0002'] == '1'
@@ -53,33 +58,34 @@ class Purifier(object):
         except AttributeError:
             raise IoCareError(f'Unable to get info for {self.name}. Make sure purifier is connected to WiFi.')
 
+    # True for On and False for Off
     def set_power(self, on):
         self.is_on = on
         self.api.control(self, '0001', '1' if on else '0')
 
-
+    # True for On and False for Off
     def set_auto_mode(self):
         self.is_auto = True
         self.api.control(self, '0002', '1')
 
-
+    # True for On and False for Off
     def set_night_mode(self):
         self.is_night = True
         self.api.control(self, '0002', '2')
 
-
+    # Speed can be 1, 2, or 3 represented as a string
     def set_fan_speed(self, speed):
         self.fan_speed = speed
         self.is_auto = False
         self.is_night = False
         self.api.control(self, '0003', speed)
 
-
+    # True for On and False for Off
     def set_light(self, on):
         self.is_light_on = on
         self.api.control(self, '0007', '2' if on else '0')
 
-
+    # Time, in minutes, can be 0, 60, 120, 240, or 480 represented as a string. A time of 0 sets the timer to off.
     def set_timer(self, time):
         self.timer = time
         self.api.control(self, '0008', time)
