@@ -30,6 +30,7 @@ STATUS = 'CWIG0602'
 CONTROL = 'CWIG0603'
 FILTERS = 'CWIA0120'
 DEVICE_NETWORK_STATUS = 'CWIG0607'
+MCU_VERSION = "CWIG0615"
 
 BS = 16
 pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS)
@@ -166,6 +167,18 @@ class IOCareApi:
         for device in SESSION.devices:
             device.refresh()
 
+    def mcu_version(self, device):
+        response = self._request(MCU_VERSION, {
+            'barcode': device.device_id,
+            'dvcBrandCd': device.device_brand,
+            'prodName': device.product_name,
+            'stationCd': '',
+            'resetDttm': '',
+            'dvcTypeCd': device.device_type,
+            'refreshFlag': 'true'
+        })
+        return response.json()['body']
+            
     def control_status(self, device):
         response = self._request(STATUS, {
             'barcode': device.device_id,
@@ -212,7 +225,8 @@ class IOCareApi:
             'funcList': [{
               'comdVal': value,
               'funcId': command
-            }]
+            }],
+            'mqttDevice': True
         })
 
     def _request(self, endpoint, params):
