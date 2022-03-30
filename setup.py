@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyiocare",
-    version="0.0.2",
+    version="0.0.3",
     author="Robert Drinovac",
     author_email="unlisted@gmail.com",
     description="A Python library for Coway Air Purifiers ",
