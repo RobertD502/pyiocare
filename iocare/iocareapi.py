@@ -169,13 +169,7 @@ class IOCareApi:
 
     def mcu_version(self, device):
         response = self._request(MCU_VERSION, {
-            'barcode': device.device_id,
-            'dvcBrandCd': device.device_brand,
-            'prodName': device.product_name,
-            'stationCd': '',
-            'resetDttm': '',
-            'dvcTypeCd': device.device_type,
-            'refreshFlag': 'true'
+            'deviceId': device.device_id,
         })
         return response.json()['body']
             
