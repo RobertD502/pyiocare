@@ -5,16 +5,21 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyiocare",
-    version="0.0.3",
+    version="0.1.0",
     author="Robert Drinovac",
     author_email="unlisted@gmail.com",
-    description="A Python library for Coway Air Purifiers ",
+    description="A asynchronous python library for Coway Air Purifiers ",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/RobertD502/pyiocare',
     keywords='coway, iocare, iocare api, coway api, airmega',
     packages=setuptools.find_packages(),
-    install_requires=[],
+    python_requires= ">=3.8",
+    install_requires=[
+        "aiohttp>=3.8.1",
+        "pycryptodome>=3.14.1",
+        "yarl>=1.7.2"
+    ],
     classifiers=(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
