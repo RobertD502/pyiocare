@@ -1,2 +1,2 @@
 # Pyiocare
-A python interface for the IOCare API utilized by Coway air purifiers
+A asynchronous python library for the IoCare API utilized by Coway air purifiers
