@@ -253,6 +253,7 @@ class CowayClient:
         }
 
         response = await self._post_endpoint(FILTERS, params)
+        print(response)
         return (response['body']['filterList'], response['body']['prodStatus'], response['body']['IAQ'])
 
 
